@@ -103,7 +103,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   ```bash
   npm start
   ```
-    or just
+  or just
 
   ```bash
   node server.js
