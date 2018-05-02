@@ -1,4 +1,4 @@
-#Very Simple GraphQL Example
+# Very Simple GraphQL Example
 
 This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http://graphql.org/code/#javascript for full list of example libraries for JavaScript.
 
@@ -103,7 +103,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   ```bash
   npm start
   ```
-  or just
+    or just
 
   ```bash
   node server.js
