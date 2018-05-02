@@ -108,3 +108,4 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   ```bash
   node server.js
   ```
+6) Access the Graphiql (pronounce "graphical") client by opening the URL as indicated: http://localhost:3000/graphiql
