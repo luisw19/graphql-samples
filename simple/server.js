@@ -7,27 +7,32 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 //GraphQL tools required to generate GraphQL schema
 const { makeExecutableSchema } = require('graphql-tools');
 
-// Define the GraphQL Types using the Type system
+// Define the GraphQL Types using the Type system. Note tha "!" means field is non-nunable
 const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
+  type Order {
+    id: String!,
+    price: Int
+  }
+  type Query {
+    orders: [Order]
+  }
 `;
 
 // Create some dummy data
-const books = [
+const orders = [
   {
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling',
+    id: "ORDER001",
+    price: 22,
   },
   {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
+    id: "ORDER002",
+    price: 100,
   },
 ];
 
-// The resolvers
+// Add a resolver.
 const resolvers = {
-  Query: { books: () => books },
+  Query: { orders: () => orders },
 };
 
 // Put together a schema
@@ -35,6 +40,7 @@ const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
+
 
 // Initialize the app
 const app = express();
