@@ -35,39 +35,39 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   const { makeExecutableSchema } = require('graphql-tools');
   ```
 
-  b) Define the GraphQL types. In this simple example, just an Order Object and a Query operation against it.
+  b) Define the GraphQL types. In this simple example, just an Order Object and a Query operation against it. The Query operation allows for a countries to be searched based on their unique ID
 
   ```bash
   const typeDefs = `
-    type Order {
-      id: String!,
-      price: Int
+    type Country {
+      id: Int!
+      name: String!,
+      code: String!,
     }
     type Query {
-      orders: [Order]
+      countries(id: Int): [Country]
     }
   `;
   ```
-  c) Create some dummy data (as in this simple example we're not connecting to a data source)
+  c) For this simple example, we'll hard code a response as in this simple example we're not connecting to a data source
 
   ```bash
-  const orders = [
+  const countries = [
     {
-      id: "ORDER001",
-      price: 22,
-    },
-    {
-      id: "ORDER002",
-      price: 100,
-    },
+      id: 826,
+      name: "United Kingdom",
+      code: "UK"
+    }
   ];
   ```
 
-  d) Now that we have types defined with sample data, a "resolver" must be created. A resolver implements the operations, in this case, a Query.
+  d) Now we create a resolver. A resolver implements the operations, in this case, a Query.
 
   ```bash
   const resolvers = {
-    Query: { orders: () => orders },
+    Query: {
+      countries: () => countryData
+    },
   };
   ```
 
