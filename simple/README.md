@@ -55,7 +55,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   const countries = [
     {
       id: 826,
-      name: "United Kingdom",
+      name: "United Kingdom of GB",
       code: "UK"
     }
   ];
