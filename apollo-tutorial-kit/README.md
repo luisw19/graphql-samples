@@ -38,7 +38,7 @@ query {
 ```
 
 Click on the play button (cmd-return), response should be something like:
-```graphql
+```json
 {
   "data": {
     "getFortuneCookie": "One false move may lose the game.",
