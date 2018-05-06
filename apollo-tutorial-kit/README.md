@@ -1,6 +1,6 @@
-# apollo-tutorial-kit
+# Apollo tutorial on how to build a GraphQL server.
 
-Repository created based on the Apollo tutorial documented on blog post: [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs).
+Repository created based on the Apollo tutorial documented on blog post: [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs) by Jonas Helfer.
 
 Up-to-date documentation and explanations can be found in the [Apollo Server docs](https://www.apollographql.com/docs/apollo-server/)
 
