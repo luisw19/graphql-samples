@@ -28,7 +28,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
 
   a) Add the require libraries as indicated
 
-  ```bash
+  ```javascript
   const express = require('express');
   const bodyParser = require('body-parser');
   const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
@@ -37,7 +37,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
 
   b) Define the GraphQL types. In this simple example, just an Order Object and a Query operation against it. The Query operation allows for a countries to be searched based on their unique ID
 
-  ```bash
+  ```javascript
   const typeDefs = `
     type Country {
       id: Int!
@@ -51,7 +51,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   ```
   c) For this simple example, we'll hard code a response as in this simple example we're not connecting to a data source
 
-  ```bash
+  ```javascript
   const countries = [
     {
       id: 826,
@@ -63,7 +63,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
 
   d) Now we create a resolver. A resolver implements the operations, in this case, a Query.
 
-  ```bash
+  ```javascript
   const resolvers = {
     Query: {
       countries: () => countryData
@@ -73,7 +73,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
 
   e) Now that the types and resolver are in place, the GrahQL schema can be created by making use of the "makeExecutableSchema" function part of "graphql-tools"
 
-  ```bash
+  ```javascript
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
@@ -82,7 +82,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
 
   d) Lastly we initiate the express server and define the different URI's the GraphQL service will resolve to
 
-  ```bash
+  ```javascript
   // Initialize the app
   const app = express();
 
