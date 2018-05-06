@@ -77,7 +77,7 @@ Click on the play button (cmd-return), response should be something like:
 ```
 
 
-## Packages installed durig the tutorial
+## Packages installed in the sample
 
 1) Casual: a fake data generator: https://github.com/boo1ean/casual
 ```bash
