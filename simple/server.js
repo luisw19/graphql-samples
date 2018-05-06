@@ -2,12 +2,14 @@
 const express = require('express');
 //To parse incoming requests
 const bodyParser = require('body-parser');
-//Apollo GraphQL server
+
+//Apollo GraphQL server including Graphiql client
 const {
   graphqlExpress,
   graphiqlExpress
 } = require('apollo-server-express');
-//GraphQL tools required to generate GraphQL schema
+
+//GraphQL tools is an opinionated structure for building GraphQL schemas and resolvers in JavaScript
 const {
   makeExecutableSchema
 } = require('graphql-tools');

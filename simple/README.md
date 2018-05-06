@@ -14,7 +14,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   npm init
 ```
 
-3) Set up apollo-server-express, graphql-tools and graphql for the endpoint
+3) Set up apollo-server-express, graphql-tools and graphql for the endpoint. Apollo is used to bind a JavaScript GraphQL schema to an HTTP server. GraphQL Tools is an npm package and an opinionated structure for how to build a GraphQL schema and resolvers in JavaScript.
 
 ```bash
   npm install --save apollo-server-express graphql-tools graphql express body-parser
