@@ -10,12 +10,12 @@
     "express": "^4.16.2",
     "graphql": "^0.11.7",
     "graphql-tools": "^2.13.0",
-    "lodash": "^4.17.4",
-    "mongoose": "^4.13.2",
+    "lodash": "^4.17.10",
+    "mongoose": "^4.13.12",
     "node-fetch": "^1.7.3",
     "npm": "^6.0.0",
-    "sequelize": "^4.28.2",
-    "sqlite": "^2.9.0"
+    "sequelize": "^4.37.6",
+    "sqlite": "^2.9.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

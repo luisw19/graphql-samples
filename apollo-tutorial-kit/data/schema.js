@@ -5,6 +5,7 @@ import {
 //import mocks from './mocks';
 import resolvers from './resolvers';
 
+//Defines Types
 const typeDefs = `
 type Author {
   id: Int
@@ -24,7 +25,7 @@ type Post {
 type Query {
   author(firstName: String, lastName: String): Author
   allAuthors: [Author]
-  getFortuneCookie: String # we'll use this later
+  getFortuneCookie: String
 }
 `;
 

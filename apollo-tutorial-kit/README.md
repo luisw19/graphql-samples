@@ -17,6 +17,7 @@ Open [http://localhost:3000/graphiql](http://localhost:3000/graphiql) and paste 
 
 ```graphql
 query {
+  getFortuneCookie
   author(firstName:"Edmond", lastName: "Jones"){
     firstName
     lastName
@@ -25,28 +26,77 @@ query {
       views
     }
   }
+  allAuthors{
+    firstName
+    posts{
+      title
+      text
+      views
+    }
+  }
 }
 ```
 
 Click on the play button (cmd-return), response should be something like:
-
-```json
+```graphql
 {
   "data": {
+    "getFortuneCookie": "One false move may lose the game.",
     "author": {
-      "firstName": "Hola",
-      "lastName": "Mundo",
+      "firstName": "Edmond",
+      "lastName": "Jones",
       "posts": [
         {
-          "title": "Blog",
-          "views": 2
-        },
-        {
-          "title": "Otro Blog",
-          "views": 200
+          "title": "A post by Edmond",
+          "views": 92
         }
       ]
-    }
+    },
+    "allAuthors": [
+      {
+        "firstName": "Maurine",
+        "posts": [
+          {
+            "title": "A post by Maurine",
+            "text": "Et qui quia odio dolore. Eligendi in deserunt. Harum sit odio dolor dicta provident quo provident.",
+            "views": 0
+          }
+        ]
+      },
+      {
+        "firstName": "Edmond",
+        "posts": [
+          {
+            "title": "A post by Edmond",
+            "text": "Harum ullam pariatur quos est quod. Ea quisquam esse quia et commodi autem. Ut exercitationem maiores et voluptas.",
+            "views": 92
+          }
+        ]
+      }
+    ]
   }
 }
+```
+
+
+## Packages installed durig the tutorial
+
+1) Casual: a fake data generator: https://github.com/boo1ean/casual
+```bash
+npm install casual --save
+```
+
+2) Sequelize: a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL. See http://docs.sequelizejs.com/
+```bash
+npm install --save sequelize sqlite lodash
+```
+
+3) Mongoose: provides a straight-forward, schema-based solution to model/persist application data in MongoDB: http://mongoosejs.com/
+```bash
+npm install --save mongoose
+```
+
+4) Node-fetch: a library to quickly fetch HTTP URLs. See: https://www.npmjs.com/package/node-fetch See http://docs.sequelizejs.com/
+```bash
+npm install --save node-fetch
 ```
