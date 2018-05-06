@@ -1,36 +1,52 @@
 # apollo-tutorial-kit
 
-Starting point for the Apollo GraphQL Server tutorial.
-
-Follow along with the tutorial in the blog post: [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs). If you want to skip ahead to the solution, check out the [server-tutorial-solution](https://github.com/apollographql/apollo-tutorial-kit/tree/server-tutorial-solution) branch of this repo.
+Repository created based on the Apollo tutorial documented on blog post: [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs).
 
 Up-to-date documentation and explanations can be found in the [Apollo Server docs](https://www.apollographql.com/docs/apollo-server/)
 
-## Getting started
+## Running the demo:
 
 ```bash
-git clone https://github.com/apollostack/apollo-starter-kit
-cd apollo-starter-kit
+git clone https://github.com/luisw19/graphql-samples.git
+cd apollo-tutorial-kit
 npm install
 npm start
 ```
 
-Then open [http://localhost:3000/graphiql](http://localhost:3000/graphiql)
-
-When you paste this on the left side of the page:
+Open [http://localhost:3000/graphiql](http://localhost:3000/graphiql) and paste the following query:
 
 ```graphql
-{
-  testString
+query {
+  author(firstName:"Edmond", lastName: "Jones"){
+    firstName
+    lastName
+    posts{
+      title
+      views
+    }
+  }
 }
 ```
 
-and hit the play button (cmd-return), then you should get this on the right side:
+Click on the play button (cmd-return), response should be something like:
 
 ```json
 {
   "data": {
-    "testString": "It works!"
+    "author": {
+      "firstName": "Hola",
+      "lastName": "Mundo",
+      "posts": [
+        {
+          "title": "Blog",
+          "views": 2
+        },
+        {
+          "title": "Otro Blog",
+          "views": 200
+        }
+      ]
+    }
   }
 }
 ```
