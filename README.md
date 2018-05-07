@@ -12,5 +12,5 @@ and reference the Graph schema and resolvers from different files.
 In this sample, we'll also implement the [REST Countries API](https://github.com/apilayer/restcountries) as a backend data source.
 
 [sqllite-rest-mongo-backend](https://github.com/luisw19/graphql-samples/tree/master/sqllite-rest-mongo-backend)
-A project based on the tutorial [How to build a GraphQL server] by **Jonas Helfer** showing to implement a graphql
-service that talks with SQL, MongoDB and REST.
+A project based on the tutorial [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs)
+by **Jonas Helfer** showing to implement a graphql service that talks with SQL, MongoDB and REST.
