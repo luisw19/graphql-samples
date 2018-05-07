@@ -1,6 +1,9 @@
 # GraphQL Countries Part 2
 
-This part is a continuation of [graphql-countries-part1](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part1). In this part we'll refactor the code to separate concerns by keeping server.js light and reference the Graph schema and resolvers from different files. In this sample, we'll also implement node-fetch to use the [REST Countries API](https://github.com/apilayer/restcountries) as a backend API.
+This part is a continuation of [graphql-countries-part1](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part1).
+In this part we'll refactor the code to separate concerns by keeping server.js light and reference the Graph schema and resolvers from
+different files. In this sample, we'll also implement node-fetch to use the [REST Countries API](https://github.com/apilayer/restcountries)
+as a backend data source.
 
 Following a step by step guide on how to do this:
 
