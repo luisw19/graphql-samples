@@ -6,22 +6,22 @@ Following a step by step guide on how to do this:
 
 #### 1) Create a folder named **/resources** and within it, add two files: **types.js** and **resolvers.js**.
 
-#### 2) Remove **typeDefs** from **server.js** and add to **resources/types.js**
+#### 2) Remove the following snippet from **server.js** and add to **resources/types.js**
 
 ```javascript
 const typeDefs = `
-type Country {
-  id: Int,
-  name: String!,
-  code: String,
-  capital: String,
-  region: String,
-  currency: String,
-  language: String
-}
-type Query {
-  countries(name: String): [Country]
-}
+  type Country {
+    id: Int,
+    name: String!,
+    code: String,
+    capital: String,
+    region: String,
+    currency: String,
+    language: String
+  }
+  type Query {
+    getCountries(name: String): [Country]
+  }
 `;
 ```
 
@@ -47,7 +47,7 @@ const countryData = [{
 // Add a resolver.
 const resolvers = {
   Query: {
-    countries: () => countryData
+    getCountries: () => countryData
   }
 };
 ```
@@ -146,13 +146,13 @@ import countries from './data'
 
 b) Comment out **countryData** as we'll fetch data in real time.
 
-c) Modify the **resolver** so the **Query** operation takes arguments and also makes use of **countries.getCountriesByName** imported from **data.js**
+c) Modify the **resolver** so the **getCountries** query operation takes arguments and also makes use of **countries.getCountriesByName** imported from **data.js**
 
 ```javascript
 const resolvers = {
   Query: {
     //countries now takes arguments
-    countries(_, args) {
+    getCountries(_, args) {
       //take the argument "name" and use it to search get a country by name
       return countries.getCountriesByName(args.name);
     }
@@ -164,7 +164,7 @@ const resolvers = {
 
 ```graphql
 query{
-  countries {
+  getCountries {
     id
     name
     code

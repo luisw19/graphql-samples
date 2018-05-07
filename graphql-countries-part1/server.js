@@ -25,7 +25,7 @@ const typeDefs = `
     language: String
   }
   type Query {
-    countries(name: String): [Country]
+    getCountries(name: String): [Country]
   }
 `;
 
@@ -43,7 +43,7 @@ const countryData = [{
 // Add a resolver.
 const resolvers = {
   Query: {
-    countries: () => countryData
+    getCountries: () => countryData
   }
 };
 

@@ -110,7 +110,7 @@ c) Modify *start* script within **package.json** as following:
     language: String
   }
   type Query {
-    countries(name: String): [Country]
+    getCountries(name: String): [Country]
   }
   ```
 
@@ -133,7 +133,7 @@ c) Modify *start* script within **package.json** as following:
   ```javascript
   const resolvers = {
     Query: {
-      countries: () => countryData
+      getCountries: () => countryData
     }
   };
   ```
@@ -191,7 +191,7 @@ Go to http://localhost:3000/graphiql to run queries!
 
 ```graphql
 query{
-  countries {
+  getCountries {
     id
     name
     code
@@ -208,7 +208,7 @@ The result should be:
 ```graphql
 {
   "data": {
-    "countries": [
+    "getCountries": [
       {
         "id": 826,
         "name": "United Kingdom",

@@ -14,7 +14,7 @@ const countryData = [{
 // Add a resolver.
 const resolvers = {
   Query: {
-    countries: () => countryData
+    getCountries: () => countryData
   }
 };
 };*/
@@ -23,7 +23,7 @@ const resolvers = {
 const resolvers = {
   Query: {
     //countries now takes arguments
-    countries(_, args) {
+    getCountries(_, args) {
       //take the argument "name" and use it to search get a country by name
       return countries.getCountriesByName(args.name);
     }

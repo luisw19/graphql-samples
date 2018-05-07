@@ -10,7 +10,7 @@ type Country {
   language: String
 }
 type Query {
-  countries(name: String): [Country]
+  getCountries(name: String): [Country]
 }
 `;
 
