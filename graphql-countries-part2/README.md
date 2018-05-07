@@ -1,8 +1,6 @@
-# GraphQL Countries Step 1
+# GraphQL Countries Part 2
 
-This example shows how to create a simple GraphQL Service that fetches hard-coded countries data.  The example shows how to create a GraphQL Schema (With Object and Query types) and a resolver based on the  Apollo GraphQL implementation.
-
-Following a step by step guide on how to complete this sample:
+This
 
 1) Install node.js for your operating system. E.g. in Mac in can be installed with brew as following:
 
@@ -73,7 +71,7 @@ Following a step by step guide on how to complete this sample:
   };
   ```
 
-  e) Now that the types and resolver are in place, the GraphQL schema can be created by making use of the "makeExecutableSchema" function part of "graphql-tools"
+  e) Now that the types and resolver are in place, the GrahQL schema can be created by making use of the "makeExecutableSchema" function part of "graphql-tools"
 
   ```javascript
   const schema = makeExecutableSchema({

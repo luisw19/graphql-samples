@@ -1,6 +1,8 @@
-# Very Simple GraphQL Example
+# GraphQL Countries Part 1
 
-This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http://graphql.org/code/#javascript for full list of example libraries for JavaScript.
+This example shows how to create a simple GraphQL Service that fetches hard-coded countries data.  The example shows how to create a GraphQL Schema (With Object and Query types) and a resolver based on the  Apollo GraphQL implementation.
+
+Following a step by step guide on how to complete this sample:
 
 1) Install node.js for your operating system. E.g. in Mac in can be installed with brew as following:
 
@@ -71,7 +73,7 @@ This is very simple GraphQL example using Node.JS Apollo-Server. Refer to http:/
   };
   ```
 
-  e) Now that the types and resolver are in place, the GrahQL schema can be created by making use of the "makeExecutableSchema" function part of "graphql-tools"
+  e) Now that the types and resolver are in place, the GraphQL schema can be created by making use of the "makeExecutableSchema" function part of "graphql-tools"
 
   ```javascript
   const schema = makeExecutableSchema({
