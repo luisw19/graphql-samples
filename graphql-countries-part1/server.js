@@ -1,20 +1,21 @@
 //Node app server
-const express = require('express');
+import express from 'express';
 //To parse incoming requests
-const bodyParser = require('body-parser');
-
+import bodyParser from 'body-parser';
 //Apollo GraphQL server including Graphiql client
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 //GraphQL tools is an opinionated structure for building GraphQL schemas and resolvers in JavaScript
-const { makeExecutableSchema } = require('graphql-tools');
+import { makeExecutableSchema } from 'graphql-tools';
+
+//Set Port. If environment variable exist use it instead
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
 
 // Define the GraphQL Types using the Type system. Note tha "!" means field is non-nunable
 const typeDefs = `
 type Country {
   id: Int!
   name: String!,
-  code: String!,
+  code: String!
 }
 type Query {
   countries(id: Int): [Country]
@@ -32,13 +33,13 @@ const countryData = [{
 const resolvers = {
   Query: {
     countries: () => countryData
-  },
+  }
 };
 
 // Put together a schema
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 // Initialize the app
@@ -55,6 +56,6 @@ app.use('/graphiql', graphiqlExpress({
 }));
 
 // Start the server
-app.listen(3000, () => {
-  console.log('Go to http://localhost:3000/graphiql to run queries!');
+app.listen(GRAPHQL_PORT, () => {
+  console.log('Go to http://localhost:' + GRAPHQL_PORT + '/graphiql to run queries!');
 });

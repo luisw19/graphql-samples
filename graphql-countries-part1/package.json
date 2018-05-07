@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Sample project",
   "main": "server.js",
-  "scripts": {
-    "start": "nodemon ./server.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luisw19/graphql-samples.git"
@@ -27,6 +24,16 @@
     "graphql-tools": "^3.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "nodemon": "^1.17.4"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "scripts": {
+    "start": "nodemon ./server.js --exec babel-node"
   }
 }

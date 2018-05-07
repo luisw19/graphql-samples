@@ -1,60 +1,40 @@
 //Node app server
-const express = require('express');
+import express from 'express';
 //To parse incoming requests
-const bodyParser = require('body-parser');
-
+import bodyParser from 'body-parser';
 //Apollo GraphQL server including Graphiql client
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 //GraphQL tools is an opinionated structure for building GraphQL schemas and resolvers in JavaScript
-const { makeExecutableSchema } = require('graphql-tools');
+import { makeExecutableSchema } from 'graphql-tools';
 
-// Define the GraphQL Types using the Type system. Note tha "!" means field is non-nunable
-const typeDefs = `
-type Country {
-  id: Int!
-  name: String!,
-  code: String!,
-}
-type Query {
-  countries(id: Int): [Country]
-}
-`;
+//Import the GraphQL Schema that defines all Operations (Queries, Mutations) and other types
+import typeDefs from './resources/types';
+//Import Resolvers, which defines how an operation is executed
+import resolvers from './resources/resolvers';
 
-// Hardcode a response
-const countryData = [{
-  id: 826,
-  name: "United Kingdom",
-  code: "UK"
-}];
+//Set Port. If environment variable exist use it instead
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
 
-// Add a resolver.
-const resolvers = {
-  Query: {
-    countries: () => countryData
-  },
-};
-
-// Put together a schema
-const schema = makeExecutableSchema({
+// Compile the Type Definitions into an executable GraphQL schema using graph-tools
+const executableSchema = makeExecutableSchema({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
-// Initialize the app
-const app = express();
+// Initialize the HTTP server using express
+const server = express();
 
-// The GraphQL endpoint
-app.use('/graphql', bodyParser.json(), graphqlExpress({
-  schema
+//Define the GraphQL endpoint using the Apollo GraphQL Server
+server.use('/graphql', bodyParser.json(), graphqlExpress({
+  executableSchema
 }));
 
-// GraphiQL, a visual editor for queries
-app.use('/graphiql', graphiqlExpress({
+//Implement the Graphiql client available that comes with the Apollo GraphQL Server
+server.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql'
 }));
 
 // Start the server
-app.listen(3000, () => {
+server.listen(GRAPHQL_PORT, () => {
   console.log('Go to http://localhost:3000/graphiql to run queries!');
 });
