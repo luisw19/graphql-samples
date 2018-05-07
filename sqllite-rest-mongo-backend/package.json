@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollographql/apollo-tutorial-kit.git"
+    "url": "git+https://github.com/luisw19/graphql-samples.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/apollographql/apollo-tutorial-kit/issues"
+    "url": "https://github.com/luisw19/graphql-samples/issues"
   },
-  "homepage": "https://github.com/apollographql/apollo-tutorial-kit#readme"
+  "homepage": "https://github.com/luisw19/graphql-samples#readme"
 }
