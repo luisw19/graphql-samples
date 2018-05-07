@@ -6,17 +6,21 @@ Following a step by step guide on how to do this:
 
 #### 1) Create a folder named **/resources** and within it, add two files: **types.js** and **resolvers.js**.
 
-#### 2) Remove the following snippet from **server.js** and add to **types.js**
+#### 2) Remove **typeDefs** from **server.js** and add to **resources/types.js**
 
 ```javascript
 const typeDefs = `
 type Country {
-  id: Int!,
+  id: Int,
   name: String!,
-  code: String!
+  code: String,
+  capital: String,
+  region: String,
+  currency: String,
+  language: String
 }
 type Query {
-  countries(id: Int): [Country]
+  countries(name: String): [Country]
 }
 `;
 ```
@@ -27,13 +31,17 @@ then append the following line to the end:
 export default typeDefs;
 ```
 
-#### 3) Remove the following snippet from **server.js** and add to **resolvers.js**
+#### 3) Remove the following snippet from **server.js** and add to **resources/resolvers.js**
 
 ```javascript
 const countryData = [{
   id: 826,
   name: "United Kingdom",
-  code: "UK"
+  code: "UK",
+  capital: "London",
+  region: "Europe",
+  currency: "British pound (GBP) - £",
+  language: "English"
 }];
 
 // Add a resolver.
@@ -50,7 +58,7 @@ then append the following line to the end:
 export default resolvers;
 ```
 
-#### 4) Now the constants **typeDef** (defined in **types.js**) and **resolver** (defined in **resolvers.js**) have to be imported into **server.js** as following:
+#### 4) Import **typeDef** (defined in **resources/types.js**) and **resolvers** (defined in **resources/resolvers.js**) by adding the following lines to **server.js**
 
 ```javascript
 import typeDefs from './resources/types';
@@ -70,17 +78,107 @@ import resolvers from './resources/resolvers';
 Go to http://localhost:3000/graphiql to run queries!
 ```
 
-#### 6) Now we'll make use of [node-fetch](https://www.npmjs.com/package/node-fetch) to fetch data from the [REST Countries API](https://github.com/apilayer/restcountries):
+Then a similar query to [part1](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part1) and result should be similar.
 
-a) First we install the [node-fetch](https://www.npmjs.com/package/node-fetch) package:
+#### 6) Now under **/resources** create a file called **data.js** where we'll add the logic to invoke the REST backend for each field of the **query operation** in the **resolvers**.
+
+we'll make use of [node-fetch](https://www.npmjs.com/package/node-fetch) to fetch data from the [REST Countries API](https://github.com/apilayer/restcountries) and [Lodash](https://lodash.com/) to deal with arrays more easily.
+
+a) First we install [node-fetch](https://www.npmjs.com/package/node-fetch) and [lodash](https://lodash.com/) packages:
 
 ```bash
-npm install --save node-fetch
+npm install --save node-fetch lodash
 ```
 
-b) Now under **/resources** create a file called **data.js** where we'll add the logic to invoke the REST backend for each field of the **query operation** in the **resolvers**.
+d) Add the following code. Descriptions inline.
 
+```javascript
+import fetch from 'node-fetch';
+import _ from 'lodash';
+
+// call REST Countries
+const countries = {
+  getCountriesByName(name) {
+    //By default all countries are fetch if no arguments are received
+    var URL = "https://restcountries.eu/rest/v2/all/";
+    if (name!=undefined){
+      //if name argument is received, search country by name
+      var URL = "https://restcountries.eu/rest/v2/name/" + name;
+    }
+    //Fetch URL
+    console.log("Fetching URL: " + URL);
+    return fetch(URL)
+      //returns with a promise
+      .then(res => res.json())
+      //once promised is fullfiled then we iterate through collection and map the values to the Country type
+      .then(res => {
+        //console.log(JSON.stringify(res));
+        console.log("Total records found: " + res.length);
+        const countryData = [];
+        //we use the map function of lodash to iterate easily
+        _.map(res, function(value, key) {
+          countryData[key] = {
+            id: value.numericCode,
+            name: value.name,
+            code: value.alpha3Code,
+            capital: value.capital,
+            region: value.region + " | " + value.subregion,
+            currency: value.currencies[0].name + " | " + value.currencies[0].code + " | " + value.currencies[0].symbol,
+            language: value.languages[0].name + " | " + value.languages[0].iso639_2
+          };
+        });
+        return countryData;
+      })
+      //catch errors if any
+      .catch(err => console.error("Error: " + err));
+  }
+};
+
+export default countries;
+```
+#### 7) Modify **resources/resolvers.js** as following:
+
+a) first import **coutries** from **data.js**
+
+```javascript
+import countries from './data'
+```
+
+b) Comment out **countryData** as we'll fetch data in real time.
+
+c) Modify the **resolver** so the **Query** operation takes arguments and also makes use of **countries.getCountriesByName** imported from **data.js**
+
+```javascript
+const resolvers = {
+  Query: {
+    //countries now takes arguments
+    countries(_, args) {
+      //take the argument "name" and use it to search get a country by name
+      return countries.getCountriesByName(args.name);
+    }
+  }
+};
+```
+
+#### 8) Start the server by running `npm start` and then run the following query:
+
+```graphql
+query{
+  countries {
+    id
+    name
+    code
+    capital
+    region
+    currency
+    language
+  }
+}
+```
+
+The result should be a list of around 250 countries.
 
 ```bash
-npm install --save lodash
+Fetching URL: https://restcountries.eu/rest/v2/all/
+Total records found: 250
 ```

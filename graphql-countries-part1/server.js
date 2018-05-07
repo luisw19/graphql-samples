@@ -35,9 +35,9 @@ const countryData = [{
   name: "United Kingdom",
   code: "UK",
   capital: "London",
-  region: "Europe",
-  currency: "British pound (GBP) - £",
-  language: "English"
+  region: "Europe | Northern Europe",
+  currency: "British pound | GBP | £",
+  language: "English | eng"
 }];
 
 // Add a resolver.

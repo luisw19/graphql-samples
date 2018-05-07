@@ -14,19 +14,23 @@ import _ from 'lodash';
 // call REST Countries
 const countries = {
   getCountriesByName(name) {
-    console.log("searching: " + name)
+    //By default all countries are fetch if no arguments are received
     var URL = "https://restcountries.eu/rest/v2/all/";
     if (name!=undefined){
+      //if name argument is received, search country by name
       var URL = "https://restcountries.eu/rest/v2/name/" + name;
     }
     //Fetch URL
     console.log("Fetching URL: " + URL);
     return fetch(URL)
+      //returns with a promise
       .then(res => res.json())
+      //once promised is fullfiled then we iterate through collection and map the values to the Country type
       .then(res => {
         //console.log(JSON.stringify(res));
         console.log("Total records found: " + res.length);
         const countryData = [];
+        //we use the map function of lodash to iterate easily
         _.map(res, function(value, key) {
           countryData[key] = {
             id: value.numericCode,
@@ -40,10 +44,9 @@ const countries = {
         });
         return countryData;
       })
+      //catch errors if any
       .catch(err => console.error("Error: " + err));
   }
 };
-
-//restCountries.getCountriesByName("venezuela");
 
 export default countries;
