@@ -1,15 +1,6 @@
-//import countries from './data'
+import countries from './data'
 
-// Add a resolver.
-/*const resolvers = {
-  Query: {
-    countries() {
-      return countries.getCountriesByName("United");
-    }
-  }
-};*/
-
-// Hardcode a response
+/*// Hardcode a response
 const countryData = [{
   id: 826,
   name: "United Kingdom",
@@ -21,7 +12,15 @@ const resolvers = {
   Query: {
     countries: () => countryData
   }
-};
+};*/
 
+// Add a resolver.
+const resolvers = {
+  Query: {
+    countries(_, args) {
+      return countries.getCountriesByName(args.name);
+    }
+  }
+};
 
 export default resolvers;

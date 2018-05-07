@@ -93,31 +93,39 @@ c) Modify *start* script within **package.json** as following:
   const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
   ```
 
-  c) Define the GraphQL **Types**. In this simple example, just an **Order object type** and a **Query operation** against it. The Query operation allows for a countries to be searched based on their unique ID.
+  c) Initialise the express server
+
+  const server = express();
+
+  d) Define the GraphQL **Types**. In this simple example, just an **Order object type** and a **Query operation** against it. The Query operation allows for a countries to be searched based on their unique ID.
 
   ```javascript
-  const typeDefs = `
-    type Country {
-      id: Int!
-      name: String!,
-      code: String!,
-    }
-    type Query {
-      countries(id: Int): [Country]
-    }
-  `;
+  type Country {
+    id: Int!
+    name: String,
+    code: String,
+    capital: String,
+    region: String,
+    currency: String,
+    language: String
+  }
+  type Query {
+    countries(name: String): [Country]
+  }
   ```
 
-  d) For this simple example, we'll hard code the data in a constant for the **resolver** to use.
+  e) For this simple example, we'll hard code the data in a constant for the **resolver** to use.
 
   ```javascript
-  const countries = [
-    {
-      id: 826,
-      name: "United Kingdom of GB",
-      code: "UK"
-    }
-  ];
+  const countryData = [{
+    id: 826,
+    name: "United Kingdom",
+    code: "UK",
+    capital: "London",
+    region: "Europe",
+    currency: "British pound (GBP) - £",
+    language: "English"
+  }];
   ```
 
   f) Now we create a **resolver**. A resolver implements the operations, in this case, an operation named **query**.
@@ -126,7 +134,7 @@ c) Modify *start* script within **package.json** as following:
   const resolvers = {
     Query: {
       countries: () => countryData
-    },
+    }
   };
   ```
 
@@ -135,27 +143,30 @@ c) Modify *start* script within **package.json** as following:
   ```javascript
   const schema = makeExecutableSchema({
     typeDefs,
-    resolvers,
+    resolvers
   });
   ```
+  > Note that **makeExecutableSchema** expects the constants **typeDefs** and **resolvers**
 
   h) Lastly we initiate the express server and define the different URI's for the GraphQL service endpoints
 
   ```javascript
-  // Initialize the app
-  const app = express();
-
-  // The GraphQL endpoint
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+  //Define the GraphQL endpoint using the Apollo GraphQL Server. Note that graphqlExress expects the schema constant
+  server.use('/graphql', bodyParser.json(), graphqlExpress({
+    schema
+  }));
 
   // GraphiQL, a visual editor for queries
-  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+  server.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql'
+  }));
 
   // Start the server
-  app.listen(GRAPHQL_PORT, () => {
-    console.log('Go to http://localhost:3000/graphiql to run queries!');
+  server.listen(GRAPHQL_PORT, () => {
+    console.log('Go to http://localhost:' + GRAPHQL_PORT + '/graphiql to run queries!');
   });
   ```
+  > Note that **graphqlExpress** expects the constant **schema**
 
 #### 8) Start the GraphQL server by running
 
@@ -179,10 +190,15 @@ Go to http://localhost:3000/graphiql to run queries!
 #### 8) Access the **graphiql** (pronounce "graphical") client from the browser using the URL displayed. Try the following query:
 
 ```graphql
-{
+query{
   countries {
     id
     name
+    code
+    capital
+    region
+    currency
+    language
   }
 }
 ```
@@ -195,7 +211,12 @@ The result should be:
     "countries": [
       {
         "id": 826,
-        "name": "United Kingdom"
+        "name": "United Kingdom",
+        "code": "UK",
+        "capital": "London",
+        "region": "Europe",
+        "currency": "British pound (GBP) - £",
+        "language": "English"
       }
     ]
   }

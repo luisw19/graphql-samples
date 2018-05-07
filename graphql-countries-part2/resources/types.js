@@ -1,12 +1,16 @@
-//Define the GraphQL Types
+// Define the GraphQL Types using the Type system. Note tha "!" means field is non-nunable
 const typeDefs = `
 type Country {
-  id: Int!,
+  id: Int,
   name: String!,
-  code: String!
+  code: String,
+  capital: String,
+  region: String,
+  currency: String,
+  language: String
 }
 type Query {
-  countries(id: Int): [Country]
+  countries(name: String): [Country]
 }
 `;
 

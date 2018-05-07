@@ -15,18 +15,18 @@ import resolvers from './resources/resolvers';
 //Set Port. If environment variable exist use it instead
 const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
 
-// Compile the Type Definitions into an executable GraphQL schema using graph-tools
-const executableSchema = makeExecutableSchema({
+// Initialize the HTTP server using express
+const server = express();
+
+//Generate the executable schema. Note that makeExecutableSchema expects typeDefs and resolvers as input
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers
 });
 
-// Initialize the HTTP server using express
-const server = express();
-
-//Define the GraphQL endpoint using the Apollo GraphQL Server
+//Define the GraphQL endpoint using the Apollo GraphQL Server. Note that graphqlExress expects the schema constant
 server.use('/graphql', bodyParser.json(), graphqlExpress({
-  executableSchema
+  schema
 }));
 
 //Implement the Graphiql client available that comes with the Apollo GraphQL Server
@@ -36,5 +36,5 @@ server.use('/graphiql', graphiqlExpress({
 
 // Start the server
 server.listen(GRAPHQL_PORT, () => {
-  console.log('Go to http://localhost:3000/graphiql to run queries!');
+  console.log('Go to http://localhost:' + GRAPHQL_PORT + '/graphiql to run queries!');
 });

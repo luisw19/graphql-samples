@@ -80,4 +80,7 @@ npm install --save node-fetch
 
 b) Now under **/resources** create a file called **data.js** where we'll add the logic to invoke the REST backend for each field of the **query operation** in the **resolvers**.
 
-c)
+
+```bash
+npm install --save lodash
+```
