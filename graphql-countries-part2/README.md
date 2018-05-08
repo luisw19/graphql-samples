@@ -257,3 +257,27 @@ The response should be:
 >
 > Also note that each of the calls above are very similar apart from the individual resource (they country) they are accessing.
 > This can't be avoided as in REST there isn't a **fragment** concept.
+
+Lastly, below is a similar GraphQL query, however in this case using **variables**.
+Variables are useful so values can be passed without having to reconstruct a query every time.
+
+```graphql
+query twoCountries($name1: String = "United Kingdom", $name2: String = "Venezuela",) {
+  country1: getCountries(name: $name1) {
+    ...fields
+  }
+  country2: getCountries(name: $name2) {
+    ...fields
+  }
+}
+
+fragment fields on Country {
+  id
+  name
+  code
+  capital
+  region
+  currency
+  language
+}
+```
