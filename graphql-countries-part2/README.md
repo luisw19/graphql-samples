@@ -262,7 +262,7 @@ Lastly, below is a similar GraphQL query, however in this case using **variables
 Variables are useful so values can be passed without having to reconstruct a query every time.
 
 ```graphql
-query twoCountries($name1: String = "United Kingdom", $name2: String = "Venezuela",) {
+query twoCountries($name1: String = "United Kingdom", $name2: String = "Venezuela") {
   country1: getCountries(name: $name1) {
     ...fields
   }
@@ -281,3 +281,53 @@ fragment fields on Country {
   language
 }
 ```
+
+> Note that the values for variables $name1 and $name2 can be overridden by simply defining the values.
+> In the graphiql editor, this can be done by adding the values defined in JSON for each value in then
+> section **QUERY VARIABLES** located lower left-hand side:
+> ```javascript
+> {
+>  "name1": "Sweden",
+>  "name2" : "Spain"
+> }
+> ```
+
+As a final test, let's make use of a **directive** to only display some fields if the value of the directive is **true**.
+
+```GraphQL
+query twoCountries($name1: String = "United Kingdom", $name2: String = "Venezuela", $include: Boolean!) {
+  country1: getCountries(name: $name1) {
+    ...fields
+  }
+  country2: getCountries(name: $name2) {
+    ...fields
+  }
+  allCountriesWithCode:getCountries{
+    ...fields
+  }
+}
+
+fragment fields on Country {
+  id
+  name
+  code @include(if: $include)
+  capital @include(if: $include)
+  region @include(if: $include)
+  currency @include(if: $include)
+  language @include(if: $include)
+}
+```
+
+> Note that we've added a new variable called "$include" as a mandatory (**!**) **scalar** type.
+> Then the directives **@include** or **@skip** can be added next to a field in the query or fragment.
+> The conditional **if** then needs to be defined taking as input the **include** variable. Meaning that
+> only **if include** equals **true** then the field will be displayed. Lastly the value for the variable
+> is also defined. Try changing the value to **false** and see how all fields with the directive are omitted.
+>
+> ```javascript
+> {
+>  "name1": "Sweden",
+>  "name2" : "Spain",
+>  "include" : false
+> }
+> ```
