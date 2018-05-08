@@ -185,3 +185,75 @@ The result should be a list of around 250 countries.
 Fetching URL: https://restcountries.eu/rest/v2/all/
 Total records found: 250
 ```
+
+> The equivalent call to REST Countries would be:
+> https://restcountries.eu/rest/v2/all?fields=numericCode;name;alpha3Code;capital;region;subregion;languages
+
+You can also try a query with **fragments** and **alias**.
+This is where the flexibility of GraphQL queries start coming into play.
+
+```graphql
+query{
+  country1: getCountries(name:"United Kingdom") {
+		...fields
+  }
+  country2: getCountries(name:"Venezuela") {
+		...fields
+  }
+}
+
+fragment fields on Country {
+  id
+  name
+  code
+  capital
+  region
+  currency
+  language
+}
+```
+
+The response should be:
+
+```javascript
+{
+  "data": {
+    "country1": [
+      {
+        "id": 826,
+        "name": "United Kingdom of Great Britain and Northern Ireland",
+        "code": "GBR",
+        "capital": "London",
+        "region": "Europe | Northern Europe",
+        "currency": "British pound | GBP | £",
+        "language": "English | eng"
+      }
+    ],
+    "country2": [
+      {
+        "id": 862,
+        "name": "Venezuela (Bolivarian Republic of)",
+        "code": "VEN",
+        "capital": "Caracas",
+        "region": "Americas | South America",
+        "currency": "Venezuelan bolívar | VEF | Bs F",
+        "language": "Spanish | spa"
+      }
+    ]
+  }
+}
+```
+
+> Note that this single GraphQL query **can't** be performed with an equivalent REST call.
+> This is because in REST **each country is its own resource**. Therefore the equivalent call would be:
+>
+> First call:
+>
+> https://restcountries.eu/rest/v2/names/United%20Kingdom?fields=numericCode;name;alpha3Code;capital;region;subregion;languages
+>
+> Second call:
+>
+> https://restcountries.eu/rest/v2/names/venezuela?fields=numericCode;name;alpha3Code;capital;region;subregion;languages
+>
+> Also note that each of the calls above are very similar apart from the individual resource (they country) they are accessing.
+> This can't be avoided as in REST there isn't a **fragment** concept.
