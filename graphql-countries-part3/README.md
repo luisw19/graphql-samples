@@ -8,7 +8,7 @@ Mutation operations are defined in a similar way to queries. However while query
 mutation fields run in series, one after the other.
 
 Note that because [REST countries](https://restcountries.eu) doesn't support POST/PUT/PATCH (is pretty much a read only API),
-will simulate an update by using http://httpbin.org.
+will simulate an update by using [RequestBin](https://github.com/Runscope/requestbin).
 
 Following the steps on how to do this:
 
