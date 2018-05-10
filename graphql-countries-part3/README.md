@@ -83,7 +83,7 @@ takes as input the argument **body**. Then we make use of **node-fetch** but thi
 POST call was successful and we can just send back the same input.
 
 ```javascript
-/const country = {
+var country = {
   upsertCountry(body) {
     //Paste a RequestBin generated URL here.
     var URL = "http://localhost:8000/18mo63u1";

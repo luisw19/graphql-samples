@@ -12,7 +12,7 @@ import _ from 'lodash';
   .catch(err => console.error("Error: " + err));*/
 
 // call REST Countries
-const countries = {
+var countries = {
   getCountriesByName(name) {
     //By default all countries are fetch if no arguments are received
     var URL = "https://restcountries.eu/rest/v2/all/";
@@ -29,7 +29,7 @@ const countries = {
       .then(res => {
         //console.log(JSON.stringify(res));
         console.log("Total records found: " + res.length);
-        const countryData = [];
+        var countryData = [];
         //we use the map function of lodash to iterate easily
         _.map(res, function(value, key) {
           countryData[key] = {
