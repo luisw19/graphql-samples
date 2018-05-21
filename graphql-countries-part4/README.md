@@ -8,3 +8,5 @@ In this example, we'll add a new field called **currencyExchange** that will be 
 Following the steps on how to do this:
 
 #### 1) TBC
+npm install --save cheerio
+https://codeburst.io/an-introduction-to-web-scraping-with-node-js-1045b55c63f7

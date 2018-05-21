@@ -37,12 +37,11 @@ const resolvers = {
     }
   },
   Currency: {
-    rate(_){
+    xrate(_){
         //call function to obtain conversion rates from conversation rate API,
         //passing as input the current value of Currency based on previous resolver
-        var convertTo = _.code + "_" + _.conversion;
-        console.log("Converting: " + convertTo);
-        return conversion.convert(convertTo);
+        console.log("Converting " + _.code + " to " + _.xrateTo);
+        return conversion.convert(_.code, _.xrateTo);
     }
   }
 };

@@ -13,8 +13,8 @@ type Currency {
   name: String,
   code: String,
   symbol: String,
-  conversion: String,
-  rate: Float
+  xrateTo: String,
+  xrate: Float
 }
 input CountryInput {
   id: Int!,
@@ -26,7 +26,7 @@ input CountryInput {
   language: String!
 }
 type Query {
-  getCountries(name: String, conversionTo: String): [Country]
+  getCountries(name: String, xrateTo: String): [Country]
 }
 type Mutation {
   upsertCountry(input: CountryInput!): Country

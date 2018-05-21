@@ -2,6 +2,8 @@
 import fetch from 'node-fetch';
 //Library with utilities to deal with arrays and more (see https://colintoh.com/blog/lodash-10-javascript-utility-functions-stop-rewriting)
 import _ from 'lodash';
+//used to screen scrap the google search response
+import cheerio from 'cheerio';
 
 //Sample fetch
 /* fetch('https://restcountries.eu/rest/v2/nameddd/' + "united")
@@ -33,10 +35,10 @@ var countries = {
         //we use the map function of lodash to iterate easily
         _.map(res, function(value, key) {
           //Define conversion value
-          var conversionTo = "USD";
-          if (args.conversionTo != undefined) {
+          var xrateTo = "EUR";
+          if (args.xrateTo != undefined) {
             //if name argument is received, search country by name
-            conversionTo = args.conversionTo;
+            xrateTo = args.xrateTo;
           }
           //set response JSON
           countryData[key] = {
@@ -49,8 +51,8 @@ var countries = {
               name: value.currencies[0].name,
               code: value.currencies[0].code,
               symbol: value.currencies[0].symbol,
-              conversion: conversionTo,
-              rate: 0
+              xrateTo: xrateTo,
+              xrate: 0
             },
             language: value.languages[0].name + " (" + value.languages[0].iso639_2 + ")"
           };
@@ -90,12 +92,12 @@ var country = {
   }
 };
 
-//Conversion function to fetch a conversion rate
-var conversion = {
-  convert(to) {
+//Conversion function to fetch a conversion rate. This the below code is commented as exchangeratesapi doesn't convert all currencies
+/*var conversion = {
+  convert(base,to) {
     //Paste a RequestBin generated URL here.
-    var URL = "http://free.currencyconverterapi.com/api/v5/convert?q=" + to + "&compact=y";
-    console.log("Posting to URL " + URL + " the following payload: " + JSON.stringify(to));
+    var URL = "https://exchangeratesapi.io/api/latest?base=" + base + "&symbols=" + to;
+    console.log("Calling: " + URL);
     //return fetch(URL, { method: 'POST', body:  country})
     return fetch(URL)
       //returns with a promise
@@ -103,14 +105,43 @@ var conversion = {
       //once promised is fullfiled then httpbin just returns the same payload we've sent
       .then(res => {
         //if response is OK, then we just send back same input
-        console.log(res[to].val);
-        return JSON.stringify(res[to].val);
+        console.log(JSON.stringify(res));
+        return res.rates[to];
+      })
+      //catch errors if any
+      .catch(err => console.error("Error: " + err));
+  }
+};*/
+
+//Exchange rate conversion function based on screen scraping a google search
+var conversion = {
+  convert(base,to) {
+    if(base==to){
+      return 1;
+    };
+    //Paste a RequestBin generated URL here.
+    var URL = "https://www.google.co.uk/search?q=" + base + "+to+" + to;
+    console.log("Calling: " + URL);
+    //Note that is requiredto add the user-agent header as otherwise google search response won't include a specific HTML tag ID for the conversion rate
+    return fetch(URL, {headers: {
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
+        }})
+      //returns with a promise
+      .then(res => res.text())
+      //once promised is fullfiled then httpbin just returns the same payload we've sent
+      .then(res => {
+        //Use cheerio to screen scrap the HTML response
+        var $ = cheerio.load(res);
+        //The tag Id "knowledge-currency__tgt-amount" is where google places the conversion rate.
+        var conversion = $('#knowledge-currency__tgt-amount').text();
+        console.log(conversion);
+
+        return conversion;
       })
       //catch errors if any
       .catch(err => console.error("Error: " + err));
   }
 };
-
 
 export {
   countries,
