@@ -24,7 +24,7 @@ docker-compose up -d
 
 > Depending on your environment you might have to run docker with **sudo** e.g. `**sudo** docker compose build`.
 
-b) Open the page http://localhost:3000 and click on **Create a RequestBin**.
+b) Open the page http://localhost:8000 and click on **Create a RequestBin**.
 
 c) Take note of the URL (will be use later).
 
