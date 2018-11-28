@@ -5,6 +5,9 @@ import _ from 'lodash';
 //used to screen scrap the google search response
 import cheerio from 'cheerio';
 
+//lib to write response to files
+import fs from 'fs';
+
 //Sample fetch
 /* fetch('https://restcountries.eu/rest/v2/nameddd/' + "united")
 	.then(res => res.json() )
@@ -132,8 +135,28 @@ var conversion = {
       .then(res => {
         //Use cheerio to screen scrap the HTML response
         var $ = cheerio.load(res);
+
+        //write response to write
+        /*
+        fs.writeFile('response.html', res, (err) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+          //file written successfully
+        })*/
+
+
+
         //The tag Id "knowledge-currency__tgt-amount" is where google places the conversion rate.
-        var conversion = $('#knowledge-currency__tgt-amount').text();
+        //var conversion = $('#knowledge-currency__tgt-amount').text();
+        // ^^ not longer working
+
+        //get response in string
+        var stringConversion = $('.dDoNo').text();
+        //remove strings and keep numbers
+        var conversion = parseFloat(stringConversion.replace( /[^\d\.]*/g, ''));
+        //log response
         console.log(conversion);
 
         return conversion;
