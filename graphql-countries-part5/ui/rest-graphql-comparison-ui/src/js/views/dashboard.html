@@ -14,7 +14,7 @@
     selection='{{countrySelection}}'
     on-selection-changed="[[updateSelection]]"
     map-provider='[[mapProvider]]'
-    style='width:100%;height:400px;'>
+    style='width:100%;'>
   </oj-thematic-map>
   <br>
   <br>
@@ -31,7 +31,7 @@
     <oj-option id="graphql" value='GraphQL'>GraphQL</oj-option>
   </oj-buttonset-many>   
 
-  <oj-dialog style="display:none"
+  <oj-dialog style="display: none; width: 40vw; height: 55vh"
     id="countryDialog"
     dialog-title="[[dialogTitle]]"
     on-oj-before-close='[[onDialogClose]]'
