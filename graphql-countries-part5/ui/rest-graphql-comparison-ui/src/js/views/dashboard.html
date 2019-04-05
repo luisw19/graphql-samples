@@ -1,0 +1,51 @@
+<!--
+ Copyright (c) 2014, 2019, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+  <h1>REST / GraphQL</h1>
+
+  <oj-thematic-map id='worldMap'
+    areas='[[areaData]]'
+    zooming='auto'
+    panning='auto'
+    animation-on-display='auto'
+    selection-mode='multiple'
+    selection='{{countrySelection}}'
+    on-selection-changed="[[updateSelection]]"
+    map-provider='[[mapProvider]]'
+    style='width:100%;height:400px;'>
+  </oj-thematic-map>
+  <br>
+  <br>
+  <h4><b>Selection:</b></h4>
+  <oj-bind-for-each data="[[displayItems]]">
+    <template>
+      <oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+      <br>
+    </template>
+  </oj-bind-for-each>
+  <br>
+  <oj-buttonset-many id="protocolSet" value="{{chosenProtocol}}" on-value-changed="[[invokePopup]]">
+    <oj-option id="rest" value='REST'>REST</oj-option>
+    <oj-option id="graphql" value='GraphQL'>GraphQL</oj-option>
+  </oj-buttonset-many>   
+
+  <oj-dialog style="display:none"
+    id="countryDialog"
+    dialog-title="[[dialogTitle]]"
+    on-oj-before-close='[[onDialogClose]]'
+    on-oj-open='[[onDialogOpen]]'>
+    <div slot="body">
+        <oj-list-view
+            id="countryList"
+            data="[[dataProvider]]"
+            selection-mode="multiple">
+          <template slot="itemTemplate">
+                  <span><oj-bind-text value='[[$current.data.name]]'></oj-bind-text> - <oj-bind-text value='[[$current.data.code]]'></oj-bind-text>: <oj-bind-text value='[[$current.data.population]]'></oj-bind-text></span>
+          </template>
+        </oj-list-view>
+    </div>
+  </oj-dialog>
+
+</div>
