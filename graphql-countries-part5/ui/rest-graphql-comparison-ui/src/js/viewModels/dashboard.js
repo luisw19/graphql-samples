@@ -58,16 +58,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
         }
       };
 
-      function buildQuery(number, code) {
+      function addCountry(number, code) {
         return 'country' + number + ': getCountriesByCode(code:"' + code + '") { ...fields } ';
+      }
+
+      function addFragment() {
+        return 'fragment fields on Country {name code population}';
       }
 
       function getCountriesQuery() {
         var queryString = 'query{';
         for (var i = 0; i < self.displayItems().length; i++) {
-          queryString = queryString + buildQuery(i, self.displayItems()[i].code);
+          queryString = queryString + addCountry(i, self.displayItems()[i].code);
         }
-        return queryString + '} fragment fields on Country {name code population}';
+        return queryString + '} ' + addFragment();
       }
 
       self.onDialogClose = function() {
