@@ -25,7 +25,7 @@ const resolvers = {
     //countries now takes arguments
     getCountries(_, args) {
       console.log(args);
-      //take the argument "name" and use it to search get a country by name
+      //pass all arguments to the function so Currency can pick it up via _
       return countries.getCountriesByName(args);
     }
   },

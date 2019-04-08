@@ -1,0 +1,98 @@
+# APP DEPLOYMENT
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: graphql4
+  name: graphql4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graphql4
+  template:
+    metadata:
+      labels:
+        app: graphql4
+        version: v1
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        env:
+        - name: GRAPHQL_PORT
+          value: "3000"
+        image: luisw19/graphql4:1.0.0
+        name: graphql4
+        ports:
+        - containerPort: 3000
+      restartPolicy: Always
+
+---
+
+# APP SERVICE
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: graphql4
+  name: graphql4
+spec:
+  ports:
+  - name: http
+    port: 3000
+  selector:
+    app: graphql4
+
+---
+
+# Istio Ingress
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: graphql4-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: graphql4-vts
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - graphql4-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /graphiql
+    rewrite:
+      uri: /graphiql
+    route:
+    - destination:
+        port:
+          number: 3000
+        host: graphql4
+  - match:
+    - uri:
+        prefix: /graphql
+    rewrite:
+      uri: /graphql
+    route:
+    - destination:
+        port:
+          number: 3000
+        host: graphql4
