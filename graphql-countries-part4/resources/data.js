@@ -151,7 +151,10 @@ var conversion = {
         //Not that this query may have to be changed depending on which country is executed
         var stringConversion = $('#knowledge-currency__tgt-amount').attr('data-value');
         //remove strings and keep numbers
-        var conversion = parseFloat(stringConversion.replace(',', '.'));
+        var conversion = 0;
+        if(stringConversion!==undefined){
+          var conversion = parseFloat(stringConversion.replace(',', '.'));
+        }
         //log response
         console.log(conversion);
 
