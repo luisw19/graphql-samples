@@ -8,7 +8,7 @@
  */
 define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
     'ojs/ojarraydataprovider', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojdialog', 'ojs/ojdialog',
-    'ojs/ojthematicmap', 'ojs/ojlistview', 'ojs/ojinputtext', 'ojs/ojlabel'
+    'ojs/ojthematicmap', 'ojs/ojlistview', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojchart'
   ],
   function (oj, ko, $, world, ArrayDataProvider) {
 
@@ -19,12 +19,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
       this.areaData = ko.observableArray();
       this.mapProvider = ko.observable();
       this.countrySelection = ko.observable();
-      this.displayItems = ko.observableArray();
+      this.displayItems = ko.observableArray([]);
       this.chosenProtocol = ko.observableArray();
       this.protocol = ko.observable();
       this.allCountries = ko.observableArray([]);
       this.dataProvider = new ArrayDataProvider(self.allCountries, {
-        'keyAttributes': 'code'
+        'keyAttributes': 'id'
       });
       this.calls = ko.observable(0);
       this.apiTitle = ko.pureComputed(function () {
@@ -36,9 +36,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
         }
         return "Protocol: " + protocolString + " - Calls Made: " + self.calls();
       });
+      var handler = new oj.ColorAttributeGroupHandler();
 
       self.invokePopup = function () {
         if (self.chosenProtocol().length > 0 && self.displayItems().length > 0) {
+          self.allCountries([]);
           self.protocol(self.chosenProtocol()[0]);
           self.calls(0);
           self.allCountries.removeAll();
@@ -50,9 +52,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
                   // Do something with the response
                   self.calls(self.calls() + 1);
                   self.allCountries.push({
+                    'id': value.alpha3Code,
                     'name': value.name,
                     'code': value.alpha3Code,
-                    'population': value.population
+                    'population': parseInt(value.population)
                   });
                 })
                 .fail(function (error) {
@@ -76,7 +79,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
                 self.calls(self.calls() + 1);
                 var countriesArray = Object.values(response.data);
                 for (var i = 0; i < countriesArray.length; i++) {
-                  self.allCountries.push(countriesArray[i]);
+                  self.allCountries.push({
+                    'id': countriesArray[i].code,
+                    'name': countriesArray[i].name,
+                    'code': countriesArray[i].code,
+                    'population': parseInt(countriesArray[i].population)
+                  });
                 }
               },
               error: function (jqXhr, textStatus, errorThrown) {
@@ -93,6 +101,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
       };
 
       self.updateSelection = function () {
+        self.allCountries([]);
         var items = '';
         var selection = self.countrySelection();
         self.displayItems.removeAll();
@@ -130,13 +139,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
         return queryString + '} ' + addFragment();
       }
 
-      self.onDialogClose = function () {
-        self.chosenProtocol.removeAll();
-      };
-
-      self.onDialogOpen = function () {
-
-
+      self.getCountryColour = function (code) {
+        return handler.getValue(code);
       };
 
       // Below are a set of the ViewModel methods invoked by the oj-module component.
@@ -163,19 +167,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'text!data/world_countries.json',
           }
         });
         self.areaData.removeAll();
-        var handler = new oj.ColorAttributeGroupHandler();
+
         var data = geo["features"]
         // For demo purposes, use the color attribute group handler to give
         // areas different colors based on a non important data dimension.
         // In a real application, the color attribute group handler should be
         // passed a meaningful data dimension.
         // var handler = new oj.ColorAttributeGroupHandler();
+
         for (var i = 0; i < data.length; i++) {
           var id = data[i]["properties"]["iso_a3"];
           var longName = data[i]["properties"]["name_long"];
           self.areaData.push({
             id: i.toString(),
-            color: handler.getValue(id),
+            color: self.getCountryColour(id),
             location: id,
             name: longName
           });
