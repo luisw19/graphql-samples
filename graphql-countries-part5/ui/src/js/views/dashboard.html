@@ -5,47 +5,48 @@
 <div class="oj-hybrid-padding">
   <h1>REST / GraphQL</h1>
 
-  <oj-thematic-map id='worldMap'
-    areas='[[areaData]]'
-    zooming='auto'
-    panning='auto'
-    animation-on-display='auto'
-    selection-mode='multiple'
-    selection='{{countrySelection}}'
-    on-selection-changed="[[updateSelection]]"
-    map-provider='[[mapProvider]]'
-    style='width:100%;'>
-  </oj-thematic-map>
-  <br>
-  <br>
+  <div class="oj-flex">
+    <div class="oj-flex-item oj-panel">
+      <oj-thematic-map id="worldMap" areas="[[areaData]]" zooming="auto" panning="auto" animation-on-display="auto"
+        selection-mode="multiple" selection="{{countrySelection}}" on-selection-changed="[[updateSelection]]"
+        map-provider="[[mapProvider]]" style="width:100%;">
+      </oj-thematic-map>
+    </div>
+
+    <div class="oj-flex-item oj-panel">
+
+      <h3><span data-bind="text: apiTitle"></span></h3>
+
+      <!--
+        Add Visualisation Here
+      -->
+      
+      <oj-list-view id="countryList" data="[[dataProvider]]" selection-mode="multiple">
+        <template slot="itemTemplate">
+          <span>
+            <oj-bind-text value="[[$current.data.name]]"></oj-bind-text> -
+            <oj-bind-text value="[[$current.data.code]]"></oj-bind-text>:
+            <oj-bind-text value="[[$current.data.population]]"></oj-bind-text>
+          </span>
+        </template>
+      </oj-list-view>
+    </div>
+  </div>
+
   <h4><b>Selection:</b></h4>
+
   <oj-bind-for-each data="[[displayItems]]">
     <template>
       <oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
-      <br>
+      <br />
     </template>
   </oj-bind-for-each>
-  <br>
-  <oj-buttonset-many id="protocolSet" value="{{chosenProtocol}}" on-value-changed="[[invokePopup]]">
-    <oj-option id="rest" value='REST'>REST</oj-option>
-    <oj-option id="graphql" value='GraphQL'>GraphQL</oj-option>
-  </oj-buttonset-many>   
 
-  <oj-dialog style="display: none; width: 40vw; height: 55vh"
-    id="countryDialog"
-    dialog-title="[[dialogTitle]]"
-    on-oj-before-close='[[onDialogClose]]'
-    on-oj-open='[[onDialogOpen]]'>
-    <div slot="body">
-        <oj-list-view
-            id="countryList"
-            data="[[dataProvider]]"
-            selection-mode="multiple">
-          <template slot="itemTemplate">
-                  <span><oj-bind-text value='[[$current.data.name]]'></oj-bind-text> - <oj-bind-text value='[[$current.data.code]]'></oj-bind-text>: <oj-bind-text value='[[$current.data.population]]'></oj-bind-text></span>
-          </template>
-        </oj-list-view>
-    </div>
-  </oj-dialog>
+  <br />
+
+  <oj-buttonset-many id="protocolSet" value="{{chosenProtocol}}" on-value-changed="[[invokePopup]]">
+    <oj-option id="rest" value="REST">REST</oj-option>
+    <oj-option id="graphql" value="GraphQL">GraphQL</oj-option>
+  </oj-buttonset-many>
 
 </div>
