@@ -21,22 +21,20 @@
         Add Visualisation Here
       -->
 
-      
-
       <!-- <oj-chart id="ojChartBar" data="[[dataProvider]]" type="bar" orientation="vertical" hover-behavior="dim">
 
         <template slot="itemTemplate">
-          <oj-chart-item value="[[$current.data.population]]" group-id='[[ ["Countries", $current.data.name] ]]'
-            series-id='[[$current.data.code]]'>
+          <oj-chart-item value="[[$current.data.population]]" group-id="[[ ['Country Population', $current.data.name] ]]"
+            series-id="[[$current.data.code]]">
           </oj-chart-item>
         </template>
         <template slot="seriesTemplate">
-          <oj-chart-series color='[[getCountryColour($current.id)]]'>
+          <oj-chart-series color="[[getCountryColour($current.id)]]">
           </oj-chart-series>
         </template>
 
         <template slot="groupTemplate">
-          <oj-chart-group label-style='[[$current.depth == 1 ? {"fontWeight":"bold"} : {"fontStyle":"italic"}]]'>
+          <oj-chart-group label-style="[[$current.depth == 1 ? {'fontWeight':'bold'} : {'fontStyle':'italic'}]]">
           </oj-chart-group>
         </template>
 

@@ -12,9 +12,9 @@
 
 ## Setup
 
-After cloning the repository and naviagting to the UI folder, you will need to install the node module dependencies in order to run the application.
+After cloning the repository and navigating to the UI folder, you will need to install the node module dependencies in order to run the application.
 
-Install Dependenceis: `ojet restore`
+Install Dependencies: `ojet restore`
 
 Start the UI: `ojet serve`
 
@@ -25,4 +25,34 @@ Select multiple countries by holding the Ctrl/Cmd key and selecting another coun
 
 ## Adding a Data Visualisation
 
-1) TODO
+1) Using the Oracle JET VSCode Plugin type `ojc` to insert the `oj-chart` element via a JET snippet.
+
+2) Set the following attributes on the `oj-chart` element:
+
+    ```properties
+    id="ojchartBar"
+    data="[[dataProvider]]"
+    type="bar"
+    orientation="vertical"
+    hover-behaviour="dim"
+    ```
+
+3) Set the following attributes on the `groupTemplate` element.
+
+    ```properties
+    label-style="[[$current.depth == 1 ? {'fontWeight':'bold'} : {'fontStyle':'italic'}]]"
+    ```
+
+4) Set the following attributes on the `seriesTemplate` element.
+
+    ```properties
+    color="[[getCountryColour($current.id)]]"
+    ```
+
+5) Set the following attributes on the `itemTemplate` element.
+
+    ```properties
+    value="[[$current.data.population]]"
+    series-id="[[$current.data.code]]"
+    group-id="[[ ['Country Population', $current.data.name] ]]"
+    ```
