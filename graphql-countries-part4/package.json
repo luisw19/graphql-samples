@@ -22,8 +22,8 @@
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
-    "graphql": "^0.13.2",
-    "graphql-tools": "^3.1.1",
+    "graphql": "^14.3.0",
+    "graphql-tools": "^4.0.4",
     "lodash": "^4.17.11",
     "node-fetch": "^2.5.0",
     "npm": "^6.9.0"

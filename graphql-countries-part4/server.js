@@ -1,9 +1,13 @@
+//This code needs to be updated for latest version of Apollo 2.x
+//Steps here: https://medium.com/@jeffrey.allen.lewis/graphql-migrating-from-apollo-server-express-1-0-to-2-0-be80f5c61bee
+
 //Node app server
 import express from 'express';
 //To parse incoming requests
 import bodyParser from 'body-parser';
 //Apollo GraphQL server including Graphiql client
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+
 //GraphQL tools is an opinionated structure for building GraphQL schemas and resolvers in JavaScript
 import { makeExecutableSchema } from 'graphql-tools';
 
