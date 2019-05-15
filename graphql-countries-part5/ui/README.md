@@ -56,3 +56,25 @@ Select multiple countries by holding the Ctrl/Cmd key and selecting another coun
     series-id="[[$current.data.code]]"
     group-id="[[ ['Country Population', $current.data.name] ]]"
     ```
+
+6) Remove any attributes not mentioned in the earlier steps from the `template` and `oj-chart` elements
+
+7) The `oj-chart` element should now look like the following
+
+    ```html
+    <oj-chart id="ojchartBar" data="[[dataProvider]]" type="bar" orientation="vertical"
+      hover-behavior="dim">
+      <template slot="groupTemplate">
+        <oj-chart-group label-style="[[$current.depth == 1 ? {'fontWeight':'bold'} : {'fontStyle':'italic'}]]">
+        </oj-chart-group>
+      </template>
+      <template slot="seriesTemplate">
+        <oj-chart-series color="[[getCountryColour($current.id)]]">
+        </oj-chart-series>
+      </template>
+      <template slot="itemTemplate">
+        <oj-chart-item value="[[$current.data.population]]" series-id="[[$current.data.code]]" group-id="[[ ['Country Population', $current.data.name] ]]">
+        </oj-chart-item>
+      </template>
+    </oj-chart>
+    ```

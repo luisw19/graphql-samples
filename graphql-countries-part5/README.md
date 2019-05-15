@@ -7,6 +7,6 @@ as a data source.
 
 Step-by-Step instructions are found in the Service and UI folders.
 
-GraphQL instructions: [GraphQL Service](https://github.com/jneate/graphql-samples/tree/master/graphql-countries-part5/service)
+GraphQL instructions: [GraphQL Service](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part5/service)
 
-Oracle JET instructions: [Oracle JET UI](https://github.com/jneate/graphql-samples/tree/master/graphql-countries-part5/ui)
+Oracle JET instructions: [Oracle JET UI](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part5/ui)
