@@ -16,6 +16,9 @@ is a continuation of **graphql-countries-part2**, where code is extended to also
 In this sample, we'll also make use of [RequestBin](https://github.com/Runscope/requestbin) to
 simulate POST calls against an REST backend.
 
+[graphql-countries-part5](https://github.com/luisw19/graphql-samples/tree/master/graphql-countries-part5)
+is a continuation of **graphql-countries-part2**, where an Oracle JET UI is added to compare REST and GraphQL APIs.
+
 [sqllite-rest-mongo-backend](https://github.com/luisw19/graphql-samples/tree/master/sqllite-rest-mongo-backend)
 A project based on the tutorial [How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs)
 by **Jonas Helfer** showing to implement a graphql service that talks with SQL, MongoDB and REST.
