@@ -1,0 +1,50 @@
+# APP DEPLOYMENT
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: graphql4
+  name: graphql4
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: graphql4
+  template:
+    metadata:
+      labels:
+        app: graphql4
+        version: v1
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        env:
+        - name: GRAPHQL_PORT
+          value: "3000"
+        image: luisw19/graphql4:1.0.0
+        name: graphql4
+        ports:
+        - containerPort: 3000
+      restartPolicy: Always
+
+---
+
+# APP SERVICE
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: graphql4
+  name: graphql4
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    run: graphql4
+  type: NodePort

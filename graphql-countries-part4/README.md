@@ -73,6 +73,15 @@ kubectl -n graphql-demo get all
 
 4. Test that you can access the Graphiql client through the URL:
 
-```
+```bash
 http://<istion ingress IP or domain>/graphiql
+```
+
+5. To delete the artifacts run:
+
+```
+kubectl delete -n graphql-demo Deployment graphql4
+kubectl delete -n graphql-demo Service graphql4
+kubectl delete -n graphql-demo Gateway graphql4-gateway
+kubectl delete -n graphql-demo graphql4 graphql4-vts
 ```
