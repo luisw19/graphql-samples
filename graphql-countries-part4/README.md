@@ -71,7 +71,21 @@ To verity that all objects were properly created you can run:
 kubectl -n graphql-demo get all
 ```
 
-4. Test that you can access the Graphiql client through the URL:
+To monitor run:
+
+```bash
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &
+kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686:16686 &
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+```
+
+Open UIs:
+
+- Kiali: [http://localhost:20001/kiali](http://localhost:20001/kiali)
+- Grafana: [http://localhost:3000](http://localhost:3000)
+- Jaeger: [http://localhost:16686](http://localhost:16686
+
+1. Test that you can access the Graphiql client through the URL:
 
 ```bash
 http://<istion ingress IP or domain>/graphiql
@@ -83,5 +97,5 @@ http://<istion ingress IP or domain>/graphiql
 kubectl delete -n graphql-demo Deployment graphql4
 kubectl delete -n graphql-demo Service graphql4
 kubectl delete -n graphql-demo Gateway graphql4-gateway
-kubectl delete -n graphql-demo graphql4 graphql4-vts
+kubectl delete -n graphql-demo VirtualService graphql4-vts
 ```
