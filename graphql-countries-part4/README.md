@@ -85,6 +85,12 @@ Open UIs:
 - Grafana: [http://localhost:3000](http://localhost:3000)
 - Jaeger: [http://localhost:16686](http://localhost:16686
 
+To kill all tunnels:
+
+```bash
+killall kubectl
+```
+
 1. Test that you can access the Graphiql client through the URL:
 
 ```bash
