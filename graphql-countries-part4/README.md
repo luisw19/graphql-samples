@@ -91,17 +91,25 @@ To kill all tunnels:
 killall kubectl
 ```
 
-1. Test that you can access the Graphiql client through the URL:
+4. Test that you can access the Graphiql client through the URL:
 
 ```bash
 http://<istion ingress IP or domain>/graphiql
 ```
 
-5. To delete the artifacts run:
+5. To performance test using *fortio*:
+
+```bash
+fortio load -c 1 -qps 0 -n 1000 -loglevel Warning -content-type "application/json" -payload '{"query":"{  getCountries {    id    name  }}","variables":null,"operationName":null}' http://129.213.66.232/graphql?
+```
+
+
+6. To delete the artifacts run:
 
 ```
 kubectl delete -n graphql-demo Deployment graphql4
 kubectl delete -n graphql-demo Service graphql4
 kubectl delete -n graphql-demo Gateway graphql4-gateway
 kubectl delete -n graphql-demo VirtualService graphql4-vts
+kubectl delete -n graphql-demo DestinationRule graphql4-dr
 ```

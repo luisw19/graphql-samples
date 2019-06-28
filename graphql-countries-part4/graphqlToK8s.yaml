@@ -65,7 +65,9 @@ spec:
       protocol: HTTP
     hosts:
     - "*"
+
 ---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -96,3 +98,24 @@ spec:
         port:
           number: 3000
         host: graphql4
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: graphql4-dr
+spec:
+  host: graphql4
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
+      http:
+        http1MaxPendingRequests: 100
+        maxRequestsPerConnection: 100
+    outlierDetection:
+      consecutiveErrors: 1
+      interval: 1s
+      baseEjectionTime: 10s
+      maxEjectionPercent: 100
