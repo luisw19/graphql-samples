@@ -11,7 +11,7 @@
     "graphql": "^0.11.7",
     "graphql-tools": "^2.13.0",
     "lodash": "^4.17.10",
-    "mongoose": "^4.13.12",
+    "mongoose": "^5.7.5",
     "node-fetch": "^1.7.3",
     "npm": "^6.0.0",
     "sequelize": "^5.15.1",
